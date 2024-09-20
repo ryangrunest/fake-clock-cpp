@@ -20,12 +20,15 @@ void PrintSpaces(int spaces) {
   };
 }
 
-void PrintStartOrEndLine() {
+void PrintStartOrEndLine(bool isDouble) {
   int i;
 
   PrintAsterisks(27);
-  PrintSpaces(4);
-  PrintAsterisks(27);
+
+  if (isDouble) {
+    PrintSpaces(4);
+    PrintAsterisks(27);
+  }
 
   cout << endl;
 }
@@ -42,7 +45,7 @@ void PrintClockDisplay(vector<int> timeUnits) {
       isPm = true;
     };
 
-    if (timeUnits.at(i) < 10 || (i == 0 && timeUnits.at(i) > 12)) {
+    if (i == 0 && (timeUnits.at(i) % 12) < 10) {
       cout << "0";
     }
 
@@ -114,8 +117,47 @@ void PrintClockLine() {
   cout << endl;
 }
 
-void DisplayMenu() {
-  cout << "Display Menu" << endl;
+void DisplayClock(vector<int> timeUnits) {
+  PrintStartOrEndLine(true);
+  PrintClockLine();
+  PrintClockDisplay(timeUnits);
+  PrintStartOrEndLine(true);
+}
+
+void PrintMenuLine(string line) {
+  PrintAsterisks(1);
+  PrintSpaces(1);
+  cout << line;
+  PrintSpaces(24 - line.size());
+  PrintAsterisks(1);
+
+  cout << endl;
+}
+
+int DisplayMenu() {
+  int userInput;
+
+  cout << endl;
+
+  PrintStartOrEndLine(false);
+  PrintMenuLine("1 - Add One Hour");
+  PrintMenuLine("2 - Add One Minute");
+  PrintMenuLine("3 - Add One Second");
+  PrintMenuLine("4 - Exit Program");
+  PrintStartOrEndLine(false);
+
+  cout << endl;
+
+  cin >> userInput;
+
+  // if (userInput != 1 || userInput != 2 || userInput != 3 || userInput != 4) {
+  //   cout << "Invalid Input. Try Again." << endl;
+  //   DisplayMenu();
+  // } else {
+    return userInput;
+  // }
+
+  // return -1;
 }
 
 void AddHour() {
@@ -137,6 +179,7 @@ int Exit() {
 
 vector<int> GetInitialInput() {
   int i;
+  int tempVal;
   vector<int> timeUnits(3);
 
   for (i = 0; i < 3; i++) {
@@ -147,15 +190,8 @@ vector<int> GetInitialInput() {
     } else if (i == 2) {
       cout << "Enter Seconds:" << endl;
     }
-    cin >> timeUnits.at(i);
-  }
-
-  for (i = 0; i < 3; i++) {
-    cout << timeUnits.at(i);
-
-    if (i != 2) {
-      cout << ":";
-    }
+    cin >> tempVal;
+    timeUnits.at(i) = tempVal % 100;
   }
 
   cout << endl;
@@ -165,12 +201,21 @@ vector<int> GetInitialInput() {
 
 int main() {
   vector<int> timeUnits = GetInitialInput();
+  int userInput;
 
-  // DisplayMenu();
-  PrintStartOrEndLine();
-  PrintClockLine();
-  PrintClockDisplay(timeUnits);
-  PrintStartOrEndLine();
+  DisplayClock(timeUnits);
+
+  userInput = DisplayMenu();
+
+  if (userInput == 4) {
+    return Exit();
+  } else if (userInput == 3) {
+    // Add One Second
+  } else if (userInput == 2) {
+    // Add One Minute
+  } else if (userInput == 1) {
+    // Add One Hour
+  }
 
   return Exit();
 }
