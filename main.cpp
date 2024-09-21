@@ -1,85 +1,51 @@
+// Ryan Grunest
+// September 20th, 2024
+
 #include <iostream>
 #include <vector>
 #include "display.h"
 #include "print.h"
+#include "math.h"
+#include "input.h"
 using namespace std;
 
-int Exit() {
-  cout << "Exiting Application..." << endl;
-  return 0;
-}
-
-vector<int> GetInitialInput() {
-  int i;
-  int tempVal;
-  vector<int> timeUnits(3);
-
-  for (i = 0; i < 3; i++) {
-    if (i == 0) {
-      cout << "Enter Hours:" << endl;
-    } else if (i == 1) {
-      cout << "Enter Minutes:" << endl;
-    } else if (i == 2) {
-      cout << "Enter Seconds:" << endl;
-    }
-
-    cin >> tempVal;
-    timeUnits.at(i) = tempVal % 100;
-  }
-
-  cout << endl;
-
-  return timeUnits;
-};
-
-vector<int> AddOne(vector<int> vect, int index) {
-  vect.at(index) += 1;
-
-  return vect;
-};
-
-vector<int> UpdateTimeUnitsWithCorrectValues(vector<int> vect) {
-  int i;
-
-  for (i = 2; i >= 0; i--) {
-    if (i == 0) {
-      if (vect.at(i) > 23) {
-        vect.at(i) = 0;
-      }
-    } else if (vect.at(i) > 59) {
-      vect.at(i - 1) += 1;
-      vect.at(i) = 0;
-    }
-  }
-
-  return vect;
-}
-
+// main program
 int main() {
   int userInput;
-  vector<int> timeUnits = GetInitialInput();
+  vector<int> timeUnits = GetInitialInput(); // get initial input
 
+  // update units before displaying
+  timeUnits = UpdateTimeUnitsWithCorrectValues(timeUnits);
+
+  // display main menu and clock
   DisplayClock(timeUnits);
   DisplayMenu();
 
+  // get user input
   cin >> userInput;
 
+  // enter main while loop of program
   while (userInput == 1 || userInput == 2 || userInput == 3) {
-    if (userInput == 3) {
+    // 
+    if (userInput == 3) { // add second
       timeUnits = AddOne(timeUnits, 2);
-    } else if (userInput == 2) {
+    } else if (userInput == 2) { // add minute
       timeUnits = AddOne(timeUnits, 1);
-    } else if (userInput == 1) {
+    } else if (userInput == 1) { // add hour
       timeUnits = AddOne(timeUnits, 0);
     };
 
+    // update units before displaying
     timeUnits = UpdateTimeUnitsWithCorrectValues(timeUnits);
 
+    // display menu and clock
     DisplayClock(timeUnits);
     DisplayMenu();
 
+    // retrieve user input again
     cin >> userInput;
   };
 
+  // when loop has ended, exit program
   return Exit();
 }

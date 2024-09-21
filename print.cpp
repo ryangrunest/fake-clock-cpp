@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// prints number of asterisks to console, given number ast
 void PrintAsterisks(int ast) {
   int i;
 
@@ -13,6 +14,7 @@ void PrintAsterisks(int ast) {
   };
 }
 
+// prints number of spaces to console, given number spaces
 void PrintSpaces(int spaces) {
   int i;
 
@@ -20,12 +22,14 @@ void PrintSpaces(int spaces) {
     cout << " ";
   };
 }
+
+// prints the start or end line of the console
 void PrintStartOrEndLine(bool isDouble) {
   int i;
 
   PrintAsterisks(27);
 
-  if (isDouble) {
+  if (isDouble) { // isDouble boolean used for clock display. regular used for main menu display
     PrintSpaces(4);
     PrintAsterisks(27);
   }
@@ -33,6 +37,7 @@ void PrintStartOrEndLine(bool isDouble) {
   cout << endl;
 }
 
+// prints whole clock display, given vector<int> values
 void PrintClockDisplay(vector<int> timeUnits) {
   int i;
   bool isPm = false;
@@ -117,6 +122,7 @@ void PrintClockDisplay(vector<int> timeUnits) {
   cout << endl;
 }
 
+// prints clock line of clock display
 void PrintClockLine() {
   // start 12 hour side
   PrintAsterisks(1);
@@ -142,10 +148,13 @@ void PrintClockLine() {
   cout << endl;
 }
 
+// prints line of menu options, given string line var = menu option
 void PrintMenuLine(string line) {
   PrintAsterisks(1);
   PrintSpaces(1);
+
   cout << line;
+  
   PrintSpaces(24 - line.size());
   PrintAsterisks(1);
 

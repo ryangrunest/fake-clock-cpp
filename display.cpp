@@ -2,6 +2,7 @@
 #include <vector>
 #include "print.h"
 
+// main function to display clock to console
 void DisplayClock(std::vector<int> timeUnits) {
   PrintStartOrEndLine(true);
   PrintClockLine();
@@ -9,6 +10,7 @@ void DisplayClock(std::vector<int> timeUnits) {
   PrintStartOrEndLine(true);
 }
 
+// main function to display main menu to console
 void DisplayMenu() {
   std::cout << std::endl;
 
